@@ -2,6 +2,7 @@ package com.example.rumi.uitesting
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.*
+import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
@@ -34,5 +35,17 @@ class MainActivityInstrumentedTest {
         onView(withId(R.id.text_user))
                 .check(matches(isDisplayed()))
 
+    }
+
+    @Test
+    fun invalidUserLoginTest(){
+        onView(withId(R.id.et_name))
+                .perform(typeText(Constant.USER_NAME_FAKE), closeSoftKeyboard())
+        onView(withId(R.id.et_password))
+                .perform(typeText(Constant.USER_PASSWORD_FAKE), closeSoftKeyboard())
+        onView(withId(R.id.btn_login))
+                .perform(click())
+        onView(withId(R.id.text_user))
+                .check(doesNotExist())
     }
 }
